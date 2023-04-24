@@ -23,6 +23,26 @@
           ></v-btn>
         </v-toolbar>
       </template>
+      <template #bottom>
+        <div class="d-flex justify-center pa-2">
+          <span class="ma-2"
+            >총 이체 금액:
+            <strong>
+              {{
+                '￦ ' +
+                readableCurrency(
+                  transfers
+                    .map((transfer) => transfer.amount ?? 0)
+                    .reduce((p: number, c: number) => p + c, 0),
+                )
+              }}</strong
+            >
+            <span class="pa-2 text-caption" style="color: gray"
+              >({{ readableCurrency(transfers.length) }} 건)</span
+            >
+          </span>
+        </div>
+      </template>
       <template #[`item.bank`]="{ item }">
         <v-chip v-if="item.raw.bank">{{ item.raw.bank }}</v-chip>
       </template>
@@ -125,3 +145,10 @@ async function exportExcel() {
     });
 }
 </script>
+<style lang="scss">
+.v-data-table {
+  .v-data-table__tr--clickable {
+    cursor: default;
+  }
+}
+</style>
