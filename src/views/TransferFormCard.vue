@@ -5,7 +5,7 @@
       <v-btn
         variant="plain"
         :icon="mdiPlusCircleOutline"
-        :disabled="!selected || !amount || !/^\d+$/.test(amount) || amount <= 0"
+        :disabled="!selected || !amount"
         @click="addItem"
       >
       </v-btn>
@@ -84,15 +84,21 @@
         ></v-text-field>
         <v-text-field
           v-model="amount"
+          :counter-value="counting"
           class="ml-4"
+          :maxlength="maxCount(displayMaxCount)"
           variant="underlined"
           density="compact"
           label="이체금액"
           prefix="￦"
           @input="onInputAmount"
-          :readonly="!selected"
-          :rules="[rules.required, rules.number]"
-        ></v-text-field>
+          :readonly="false && !selected"
+          :rules="[rules.currency]"
+        >
+          <template #counter>
+            {{ counting(amount) }} / {{ displayMaxCount }}
+          </template></v-text-field
+        >
       </div>
     </div>
   </v-card>
@@ -128,28 +134,57 @@ const accountNumber = computed(() => selected.value?.accountNumber);
 const bank = computed(() => selected.value?.bank);
 const pageSize = 10;
 let page = 0;
+const displayMaxCount = 16;
+const rules = {
+  currency: (v: any) =>
+    /^[0-9]{1,3}(,[0-9]{3})*$/.test(v) || `이체금액을 적어주세요. ${v}`,
+};
+
+function toCurrency(numberString: string) {
+  return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ',') ?? '';
+}
+
+function toNumber(currecny: string) {
+  return Number(`${currecny}`.split(',').join(''));
+}
+
+function counting(value: any) {
+  let count = 0;
+  if (value) {
+    count = `${toNumber(value)}`.length;
+  }
+  return count;
+}
+
+function maxCount(max: number) {
+  return (4 * max) / 3;
+}
 
 function addItem() {
   emit('addItem', {
     ...selected.value,
-    amount: amount.value,
+    amount: toNumber(amount.value),
   });
   selected.value = undefined;
   amount.value = undefined;
   oldAmount.value = undefined;
 }
 
-const rules = {
-  required: (v: any) => !!v || '이체금액을 적어주세요.',
-  number: (v: any) => /^\d+$/.test(v) || '숫자를 적어주세요',
-};
-
 function onInputAmount() {
-  if (/^0$/.test(amount.value) || !/^\d*$/.test(amount.value)) {
+  const plain = toNumber(amount.value);
+
+  if (/[0-9]{4}/.test(amount.value)) {
+    amount.value = toCurrency(`${plain}`);
+  }
+
+  if (amount.value !== '' && !/^[0-9]{1,3}(,[0-9]{3})*$/.test(amount.value)) {
     amount.value = oldAmount.value;
   }
 
-  oldAmount.value = amount.value;
+  if (plain) {
+    oldAmount.value = amount.value;
+    amount.value = toCurrency(`${plain}`);
+  }
 }
 
 function keywordFilter(itemTitle: string, current: string, item: any) {
