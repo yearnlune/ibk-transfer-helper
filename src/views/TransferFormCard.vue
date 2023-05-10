@@ -82,23 +82,12 @@
           readonly
           label="개설은행"
         ></v-text-field>
-        <v-text-field
-          v-model="amount"
-          :counter-value="counting"
+        <CurrencyTextField
           class="ml-4"
-          :maxlength="maxCount(displayMaxCount)"
-          variant="underlined"
-          density="compact"
+          v-model="amount"
           label="이체금액"
-          prefix="￦"
-          @input="onInputAmount"
-          :readonly="false && !selected"
-          :rules="[rules.currency]"
-        >
-          <template #counter>
-            {{ counting(amount) }} / {{ displayMaxCount }}
-          </template></v-text-field
-        >
+          :readonly="!selected"
+        ></CurrencyTextField>
       </div>
     </div>
   </v-card>
@@ -114,6 +103,7 @@ import debounce from 'lodash.debounce';
 import { storeToRefs } from 'pinia';
 import { computed, Ref, ref, watch } from 'vue';
 
+import CurrencyTextField from '@/components/CurrencyTextField.vue';
 import { Account } from '@/models';
 import { accountStore } from '@/store';
 import AccountRegistrationDialog from '@/views/AccountRegistrationDialog.vue';
@@ -134,30 +124,9 @@ const accountNumber = computed(() => selected.value?.accountNumber);
 const bank = computed(() => selected.value?.bank);
 const pageSize = 10;
 let page = 0;
-const displayMaxCount = 16;
-const rules = {
-  currency: (v: any) =>
-    /^[0-9]{1,3}(,[0-9]{3})*$/.test(v) || `이체금액을 적어주세요. ${v}`,
-};
-
-function toCurrency(numberString: string) {
-  return numberString.replace(/\B(?=(\d{3})+(?!\d))/g, ',') ?? '';
-}
 
 function toNumber(currecny: string) {
   return Number(`${currecny}`.split(',').join(''));
-}
-
-function counting(value: any) {
-  let count = 0;
-  if (value) {
-    count = `${toNumber(value)}`.length;
-  }
-  return count;
-}
-
-function maxCount(max: number) {
-  return (4 * max) / 3;
 }
 
 function addItem() {
@@ -168,23 +137,6 @@ function addItem() {
   selected.value = undefined;
   amount.value = undefined;
   oldAmount.value = undefined;
-}
-
-function onInputAmount() {
-  const plain = toNumber(amount.value);
-
-  if (/[0-9]{4}/.test(amount.value)) {
-    amount.value = toCurrency(`${plain}`);
-  }
-
-  if (amount.value !== '' && !/^[0-9]{1,3}(,[0-9]{3})*$/.test(amount.value)) {
-    amount.value = oldAmount.value;
-  }
-
-  if (plain) {
-    oldAmount.value = amount.value;
-    amount.value = toCurrency(`${plain}`);
-  }
 }
 
 function keywordFilter(itemTitle: string, current: string, item: any) {

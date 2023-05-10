@@ -47,7 +47,16 @@
         <v-chip v-if="item.raw.bank">{{ item.raw.bank }}</v-chip>
       </template>
       <template #[`item.amount`]="{ item }">
-        {{ '￦' + readableCurrency(item.raw.amount) }}
+        <div v-if="item.raw.readonly" @dblclick="item.raw.readonly = false">
+          {{ '￦ ' + readableCurrency(item.raw.amount) }}
+        </div>
+        <CurrencyTextField
+          v-else
+          v-model="item.raw.amount"
+          label=""
+          autofocus
+          @blur="item.raw.readonly = true"
+        ></CurrencyTextField>
       </template>
       <template #[`item.actions`]="{ index }">
         <v-icon :icon="mdiCloseCircleOutline" @click="deleteItem(index)" />
@@ -68,6 +77,7 @@ import { Ref, ref } from 'vue';
 import CommonSnackBar, {
   CommonSnackBarLevel,
 } from '@/components/CommonSnackBar.vue';
+import CurrencyTextField from '@/components/CurrencyTextField.vue';
 import { createExcel } from '@/services/excelService';
 import { excelDownload } from '@/services/fileService';
 import { accountStore } from '@/store';
@@ -115,7 +125,7 @@ const snackMessage: Ref<string> = ref('');
 const snackLevel: Ref<CommonSnackBarLevel> = ref('confirm');
 
 function addItem(item: any) {
-  transfers.value.push(item);
+  transfers.value.push({ ...item, readonly: true });
 }
 
 function deleteItem(index: number) {
