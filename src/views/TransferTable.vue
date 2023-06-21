@@ -13,12 +13,12 @@
           <v-toolbar-title>이체 관리</v-toolbar-title>
           <v-btn
             :icon="mdiMicrosoftExcel"
-            :disabled="hasTransfers"
+            :disabled="hasTransfers()"
             @click="exportExcel"
           ></v-btn>
           <v-btn
             :icon="mdiBroom"
-            :disabled="hasTransfers"
+            :disabled="hasTransfers()"
             @click="clear"
           ></v-btn>
         </v-toolbar>
