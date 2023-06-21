@@ -1,6 +1,6 @@
 {
   "name": "ibk-transfer-helper",
-  "version": "0.1.6",
+  "version": "0.1.7",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -26,7 +26,7 @@
     "vue": "^3.2.47",
     "vue-class-component": "^8.0.0-0",
     "vuedraggable": "next",
-    "vuetify": "^3.1.10",
+    "vuetify": "^3.3.5",
     "webfontloader": "^1.0.0"
   },
   "devDependencies": {
