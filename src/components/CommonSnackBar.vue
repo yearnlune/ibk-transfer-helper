@@ -18,8 +18,8 @@ export type CommonSnackBarLevel = 'confirm' | 'success' | 'warning' | 'error';
 withDefaults(
   defineProps<{
     message: string;
-    timeout: number;
-    location: any;
+    timeout?: number;
+    location?: any;
     level: CommonSnackBarLevel;
   }>(),
   {

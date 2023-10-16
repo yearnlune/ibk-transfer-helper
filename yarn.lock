@@ -8802,7 +8802,6 @@ __metadata:
     vue-cli-plugin-vuetify: ~2.5.8
     vue-eslint-parser: ^9.1.0
     vue-template-compiler: ^2.6.14
-    vuedraggable: next
     vuetify: ^3.3.5
     webfontloader: ^1.0.0
     webpack: ^5.76.2
@@ -13580,13 +13579,6 @@ __metadata:
   languageName: node
   linkType: hard
 
-"sortablejs@npm:1.14.0":
-  version: 1.14.0
-  resolution: "sortablejs@npm:1.14.0"
-  checksum: 7b9d2cbb0331f3f259b8703a17174ff46a941b6d59c77c75ca05a5bd484bf2b409a9c1d21344f9c933939880450803b254825c7c7d7f88034e8c7e675420b389
-  languageName: node
-  linkType: hard
-
 "source-list-map@npm:^2.0.0":
   version: 2.0.1
   resolution: "source-list-map@npm:2.0.1"
@@ -15257,20 +15249,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vuedraggable@npm:next":
-  version: 4.1.0
-  resolution: "vuedraggable@npm:4.1.0"
-  dependencies:
-    sortablejs: 1.14.0
-  peerDependencies:
-    vue: ^3.0.1
-  checksum: 8b4c5a6b384361df97f7a3595d7772dfbb086bf97c6702a1117b532a9e49db2908cb5d21b7959cb10179714c4c2225e4be0b77b29f778923169ea8a8197a429f
-  languageName: node
-  linkType: hard
-
 "vuetify@npm:^3.3.5":
-  version: 3.3.5
-  resolution: "vuetify@npm:3.3.5"
+  version: 3.3.21
+  resolution: "vuetify@npm:3.3.21"
   peerDependencies:
     typescript: ">=4.7"
     vite-plugin-vuetify: ^1.0.0-alpha.12
@@ -15286,7 +15267,7 @@ __metadata:
       optional: true
     webpack-plugin-vuetify:
       optional: true
-  checksum: 7be82835ab00bd9f49f7f04072b62c5655286b466aaaba271904ad821e1b77f653d4866d00dae3934f63c2072f80232f08747b2059e62518150d7d7f11303860
+  checksum: 96cdc0f8db9206ab39f23679e76163604c65a384a305e93621c18d57aba770a096d7af66cfefefd492ca3a977969a159135932b82a5214179fb5bb54ad002c0f
   languageName: node
   linkType: hard
 
