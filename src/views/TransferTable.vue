@@ -14,8 +14,9 @@
           <v-btn
             :icon="mdiBroom"
             :disabled="hasTransfers()"
-            @click="clear"
-          ></v-btn>
+            @click="onDeleteAllClick()"
+          >
+          </v-btn>
         </v-toolbar>
       </template>
       <template #bottom>
@@ -70,6 +71,13 @@
     :message="snackMessage"
     :level="snackLevel"
   ></CommonSnackBar>
+  <DeleteDialog
+    v-model="deleteAllDialog"
+    title="모두 삭제하시겠습니까?"
+    submitLabel="모두 삭제"
+    cancelLabel="취소"
+    @delete-item="clear"
+  ></DeleteDialog>
 </template>
 <script setup lang="ts">
 import {
@@ -85,6 +93,7 @@ import CommonSnackBar, {
   CommonSnackBarLevel,
 } from '@/components/CommonSnackBar.vue';
 import CurrencyTextField from '@/components/CurrencyTextField.vue';
+import DeleteDialog from '@/components/DeleteDialog.vue';
 import { createExcel } from '@/services/excelService';
 import { excelDownload } from '@/services/fileService';
 import { accountStore } from '@/store';
@@ -148,6 +157,8 @@ const mouseDownY: Ref<number> = ref(0);
 const mouseX: Ref<number> = ref(0);
 const mouseY: Ref<number> = ref(0);
 const currRow: Ref<any> = ref();
+
+const deleteAllDialog: Ref<Boolean> = ref(false);
 
 function addItem(item: any) {
   transfers.value.push({ ...item, readonly: true });
@@ -302,6 +313,10 @@ function moveRow(x: number, y: number) {
       swapRow(rowElem, i);
     }
   }
+}
+
+function onDeleteAllClick() {
+  deleteAllDialog.value = true;
 }
 
 function onMousedown(e: any) {

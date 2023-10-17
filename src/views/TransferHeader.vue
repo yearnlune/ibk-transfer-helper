@@ -5,7 +5,7 @@
       <v-responsive max-width="350">
         <v-file-input
           v-model="importFiles"
-          accept=".csv"
+          accept=".csv, .txt"
           density="compact"
           width="100"
           label="계좌 데이터(CSV) 불러오기"
@@ -52,11 +52,16 @@ let fileName = '';
 function update() {
   if (importFiles.value.length > 0) {
     const reader = new FileReader();
-    reader.readAsText(importFiles.value[0], 'utf-8');
+    let first = true;
     fileName = importFiles.value[0].name;
     reader.onload = (e) => {
       load.value = true;
       const text = e.target?.result?.toString() || '';
+
+      if (text.includes('�')) {
+        reader.dispatchEvent(new Event('invalid character error'));
+      }
+
       const textLine: string[] = text.split('\n');
       const accountCandidates = textLine
         .filter((line) => !/계좌번호/.test(line))
@@ -74,6 +79,14 @@ function update() {
       updateAccounts(accountCandidates);
       initAccountCount.value = accountCandidates.length;
     };
+    reader.onerror = (e) => {
+      console.error(e);
+      if (first) {
+        first = false;
+        reader.readAsText(importFiles.value[0], 'euc-kr');
+      }
+    };
+    reader.readAsText(importFiles.value[0], 'utf-8');
   }
 }
 
