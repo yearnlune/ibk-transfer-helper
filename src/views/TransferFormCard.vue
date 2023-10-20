@@ -140,7 +140,7 @@ function addItem() {
 }
 
 function keywordFilter(itemTitle: string, current: string, item: any) {
-  return new RegExp(current).test(item.value.keyword);
+  return new RegExp(current).test(item.raw.keyword);
 }
 
 function createAccount(account: Account) {

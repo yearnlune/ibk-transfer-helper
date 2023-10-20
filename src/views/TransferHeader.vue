@@ -59,7 +59,7 @@ function update() {
       const text = e.target?.result?.toString() || '';
 
       if (text.includes('�')) {
-        reader.dispatchEvent(new Event('invalid character error'));
+        reader.dispatchEvent(new Event('error'));
       }
 
       const textLine: string[] = text.split('\n');

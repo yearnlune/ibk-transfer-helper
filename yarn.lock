@@ -8802,7 +8802,7 @@ __metadata:
     vue-cli-plugin-vuetify: ~2.5.8
     vue-eslint-parser: ^9.1.0
     vue-template-compiler: ^2.6.14
-    vuetify: ^3.3.5
+    vuetify: ^3.3.22
     webfontloader: ^1.0.0
     webpack: ^5.76.2
     webpack-plugin-vuetify: ^2.0.0-alpha.0
@@ -15249,9 +15249,9 @@ __metadata:
   languageName: node
   linkType: hard
 
-"vuetify@npm:^3.3.5":
-  version: 3.3.21
-  resolution: "vuetify@npm:3.3.21"
+"vuetify@npm:^3.3.22":
+  version: 3.3.22
+  resolution: "vuetify@npm:3.3.22"
   peerDependencies:
     typescript: ">=4.7"
     vite-plugin-vuetify: ^1.0.0-alpha.12
@@ -15267,7 +15267,7 @@ __metadata:
       optional: true
     webpack-plugin-vuetify:
       optional: true
-  checksum: 96cdc0f8db9206ab39f23679e76163604c65a384a305e93621c18d57aba770a096d7af66cfefefd492ca3a977969a159135932b82a5214179fb5bb54ad002c0f
+  checksum: bdc425fbb3f454d36086793350c2d543f0fb77a3d2f00814146f6f242fca18916e848acc9248b91f9e1293ce3fdc90e28295004445f2f272f7caf6e0c75b736f
   languageName: node
   linkType: hard
 
