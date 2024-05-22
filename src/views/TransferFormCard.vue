@@ -140,7 +140,7 @@ function addItem() {
 }
 
 function keywordFilter(itemTitle: string, current: string, item: any) {
-  return new RegExp(current).test(item.raw.keyword);
+  return new RegExp(current, 'i').test(item.raw.keyword);
 }
 
 function createAccount(account: Account) {
@@ -153,7 +153,7 @@ function updateSearch() {
     items.value = accounts.value.slice(page * pageSize, (page + 1) * pageSize);
   } else {
     items.value = accounts.value
-      .filter((account) => new RegExp(search.value).test(account.keyword))
+      .filter((account) => new RegExp(search.value, 'i').test(account.keyword))
       .slice(page * pageSize, (page + 1) * pageSize);
   }
 }
@@ -162,7 +162,7 @@ const onScroll = debounce((isIntersecting) => {
   if (isIntersecting) {
     page += 1;
     const appendItems = accounts.value
-      .filter((account) => new RegExp(search.value).test(account.keyword))
+      .filter((account) => new RegExp(search.value, 'i').test(account.keyword))
       .slice(page * pageSize, (page + 1) * pageSize);
     items.value = items.value.concat(appendItems);
   }
