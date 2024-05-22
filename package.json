@@ -1,6 +1,6 @@
 {
   "name": "ibk-transfer-helper",
-  "version": "0.1.12",
+  "version": "1.0.12",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -65,5 +65,8 @@
     "last 2 versions",
     "not dead"
   ],
+  "engines": {
+    "node": ">=14.0.0 <17.0.0"
+  },
   "packageManager": "yarn@3.5.0"
 }
